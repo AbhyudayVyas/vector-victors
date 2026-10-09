@@ -15,7 +15,16 @@
     --light:#eef2fb;      /* hero colour */
     --paper:#ffffff;
     --dark:#060a18;       /* loader colour */
+    --rule:#e5e9f2;
     --radius:18px;
+  }
+  body.dark-theme{
+    --ink:#f4f7ff;
+    --muted:#b4bfd6;
+    --light:#121b31;
+    --paper:#0b1224;
+    --navy:#dce7ff;
+    --rule:#273451;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -59,6 +68,7 @@
     position:fixed;top:0;left:0;z-index:100;
     padding:14px clamp(16px,4vw,40px);
     display:flex;align-items:center;gap:12px;
+    width:100%;
   }
   header a{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--navy)}
   header svg{width:clamp(38px,5vw,52px);height:auto;display:block}
@@ -66,6 +76,17 @@
     font-weight:700;letter-spacing:.04em;text-transform:uppercase;
     font-size:clamp(.8rem,1.6vw,1rem);
   }
+  .theme-toggle{
+    margin-left:auto;border:1px solid currentColor;border-radius:999px;
+    width:42px;height:42px;display:grid;place-items:center;
+    background:var(--paper);color:var(--navy);cursor:pointer;font-size:1.1rem;
+    transition:background .2s ease,color .2s ease,transform .2s ease;
+  }
+  .theme-toggle:hover{transform:translateY(-1px)}
+  .theme-toggle:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+  .theme-toggle .sun{display:none}
+  body.dark-theme .theme-toggle .moon{display:none}
+  body.dark-theme .theme-toggle .sun{display:inline}
 
   /* ---------- 3. HERO (top half, solid light) ---------- */
   .hero{
@@ -98,9 +119,9 @@
   /* ---------- 4. MEMBERS ---------- */
   .member{
     display:flex;align-items:center;gap:clamp(20px,4vw,44px);
-    padding:28px 0;border-top:1px solid #e5e9f2;
+    padding:28px 0;border-top:1px solid var(--rule);
   }
-  .member:last-child{border-bottom:1px solid #e5e9f2}
+  .member:last-child{border-bottom:1px solid var(--rule)}
   .photo{
     flex:0 0 auto;width:clamp(96px,18vw,160px);aspect-ratio:1;border-radius:50%;
     overflow:hidden;display:flex;align-items:center;justify-content:center;
@@ -195,6 +216,10 @@
     <svg role="img" aria-label="Vector Victors logo"><use href="#logo"/></svg>
     <span>Vector Victors</span>
   </a>
+  <button class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+    <span class="moon" aria-hidden="true">&#9790;</span>
+    <span class="sun" aria-hidden="true">&#9728;</span>
+  </button>
 </header>
 
 <main id="top">
@@ -324,6 +349,22 @@
 
 <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  const themeToggle = document.querySelector('.theme-toggle');
+  const savedTheme = localStorage.getItem('theme');
+
+  function setTheme(isDark) {
+    document.body.classList.toggle('dark-theme', isDark);
+    themeToggle.setAttribute('aria-pressed', String(isDark));
+    themeToggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+
+  setTheme(savedTheme === 'dark');
+  themeToggle.addEventListener('click', function () {
+    const isDark = !document.body.classList.contains('dark-theme');
+    setTheme(isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
 
   // Loader: shows for 2 seconds, then fades out
   window.addEventListener('load', function () {
