@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vector Victors</title>
+<meta name="description" content="Vector Victors – a venture by four partners.">
+<style>
+  :root{
+    --navy:#0a1a4f;
+    --blue:#0a64f0;
+    --purple:#6a2ff0;
+    --ink:#101828;
+    --muted:#5b6478;
+    --light:#eef2fb;      /* hero colour */
+    --paper:#ffffff;
+    --dark:#060a18;       /* loader colour */
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--paper);line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body.loading{overflow:hidden}
+
+  /* ---------- 1. LOADER ---------- */
+  #loader{
+    position:fixed;inset:0;z-index:1000;background:var(--dark);
+    display:flex;align-items:center;justify-content:center;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #loader.done{opacity:0;visibility:hidden}
+  #loader svg{
+    width:clamp(110px,22vw,190px);height:auto;
+    opacity:0;transform:scale(.85);
+    animation:logoIn 1.6s cubic-bezier(.2,.8,.2,1) .15s forwards;
+  }
+  #loader .bar{
+    position:absolute;bottom:18vh;width:clamp(100px,20vw,160px);height:2px;
+    background:rgba(255,255,255,.1);overflow:hidden;border-radius:2px;
+  }
+  #loader .bar::after{
+    content:"";display:block;height:100%;width:100%;
+    background:linear-gradient(90deg,var(--blue),var(--purple));
+    transform:translateX(-100%);animation:bar 2s ease-in-out forwards;
+  }
+  @keyframes logoIn{
+    0%{opacity:0;transform:scale(.85)}
+    60%{opacity:1;transform:scale(1.03)}
+    100%{opacity:1;transform:scale(1)}
+  }
+  @keyframes bar{to{transform:translateX(0)}}
+
+  /* ---------- 2. HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;z-index:100;
+    padding:14px clamp(16px,4vw,40px);
+    display:flex;align-items:center;gap:12px;
+  }
+  header a{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--navy)}
+  header svg{width:clamp(38px,5vw,52px);height:auto;display:block}
+  header span{
+    font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    font-size:clamp(.8rem,1.6vw,1rem);
+  }
+
+  /* ---------- 3. HERO (top half, solid light) ---------- */
+  .hero{
+    height:50vh;min-height:300px;background:var(--light);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:0 20px;
+  }
+  .hero h1{
+    font-size:clamp(3.2rem,14vw,10rem);
+    font-weight:800;letter-spacing:-.04em;line-height:1;
+    text-transform:lowercase;
+    background:linear-gradient(120deg,var(--navy) 10%,var(--blue) 55%,var(--purple) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{
+    margin-top:14px;color:var(--muted);font-size:clamp(.85rem,1.8vw,1.05rem);
+    letter-spacing:.18em;text-transform:uppercase;
+  }
+
+  section{padding:clamp(56px,9vw,96px) clamp(20px,6vw,80px)}
+  .wrap{max-width:960px;margin:0 auto}
+  h2{
+    font-size:clamp(1.6rem,4vw,2.3rem);color:var(--navy);
+    letter-spacing:-.02em;margin-bottom:8px;
+  }
+  .sub{color:var(--muted);margin-bottom:44px}
+  .accent{width:48px;height:4px;border-radius:4px;margin:12px 0 18px;
+    background:linear-gradient(90deg,var(--blue),var(--purple))}
+
+  /* ---------- 4. MEMBERS ---------- */
+  .member{
+    display:flex;align-items:center;gap:clamp(20px,4vw,44px);
+    padding:28px 0;border-top:1px solid #e5e9f2;
+  }
+  .member:last-child{border-bottom:1px solid #e5e9f2}
+  .photo{
+    flex:0 0 auto;width:clamp(96px,18vw,160px);aspect-ratio:1;border-radius:50%;
+    overflow:hidden;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--navy),var(--blue) 60%,var(--purple));
+    color:#fff;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:700;
+    box-shadow:0 10px 30px rgba(10,100,240,.2);
+  }
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .info h3{font-size:clamp(1.15rem,2.4vw,1.5rem);color:var(--navy)}
+  .role{
+    display:inline-block;margin:4px 0 10px;font-size:.78rem;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--blue);
+  }
+  .info p{color:var(--muted);max-width:56ch}
+
+  /* ---------- 5. RULES ---------- */
+  .rules{background:var(--light)}
+  .rules ol{list-style:none;counter-reset:r;display:grid;gap:18px;margin-top:28px}
+  .rules li{
+    counter-increment:r;background:var(--paper);border-radius:var(--radius);
+    padding:22px 24px 22px 76px;position:relative;
+    box-shadow:0 4px 18px rgba(16,24,40,.06);
+  }
+  .rules li::before{
+    content:counter(r);position:absolute;left:22px;top:50%;transform:translateY(-50%);
+    width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-weight:700;color:#fff;background:linear-gradient(135deg,var(--blue),var(--purple));
+  }
+  .rules li strong{display:block;color:var(--navy);margin-bottom:2px}
+  .rules li span{color:var(--muted)}
+
+  footer{
+    text-align:center;padding:28px 20px;background:var(--dark);
+    color:#8a93aa;font-size:.85rem;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:560px){
+    .member{flex-direction:column;text-align:center}
+    .info p{margin:0 auto}
+    .rules li{padding:70px 20px 20px}
+    .rules li::before{left:50%;top:22px;transform:translateX(-50%)}
+    .rules li{text-align:center}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #loader svg,#loader .bar::after{animation-duration:.01s}
+  }
+</style>
+</head>
+<body class="loading">
+
+<!-- Logo symbol, defined once and reused (loader + header) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gNavy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b2a6b"/><stop offset="1" stop-color="#050c3a"/>
+    </linearGradient>
+    <linearGradient id="gBlue" x1="0.2" y1="1" x2="0.8" y2="0">
+      <stop offset="0" stop-color="#8a2ff5"/><stop offset=".3" stop-color="#2f6bff"/>
+      <stop offset=".7" stop-color="#0a64f0"/><stop offset="1" stop-color="#00a8ff"/>
+    </linearGradient>
+    <linearGradient id="gPurple" x1="1" y1="0" x2="0.2" y2="1">
+      <stop offset="0" stop-color="#00a8ff"/><stop offset=".35" stop-color="#2a4ae0"/>
+      <stop offset="1" stop-color="#5a1fc8"/>
+    </linearGradient>
+    <linearGradient id="gStar" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a64f0"/><stop offset="1" stop-color="#7b2ff7"/>
+    </linearGradient>
+    <symbol id="logo" viewBox="200 180 850 890">
+      <!-- dark left stroke -->
+      <path fill="url(#gNavy)" d="M212 456 L440 453 Q452 453 458 463 L608 668 C528 735 484 795 489 850 Q494 868 502 886 Z"/>
+      <!-- arrow ribbon -->
+      <path fill="url(#gBlue)" d="M608 668 C700 590 785 520 828 436 L746 436 L922 335 L922 521 L878 462 C800 580 655 770 613 872 C606 912 625 965 658 1058 C600 1005 540 950 502 886 C480 835 520 735 608 668 Z"/>
+      <!-- right stroke -->
+      <path fill="url(#gPurple)" d="M872 551 L1030 551 Q1043 554 1036 566 L662 1060 Q636 995 612 905 C610 862 640 830 668 797 Z"/>
+      <!-- star -->
+      <path fill="url(#gStar)" d="M951 192 Q960 236 1023 262 Q966 286 951 333 Q940 286 880 263 Q936 240 951 192 Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- 1. Loading screen -->
+<div id="loader" aria-label="Loading">
+  <svg role="img" aria-label="Vector Victors logo"><use href="#logo"/></svg>
+  <div class="bar"></div>
+</div>
+
+<!-- 2. Header logo (always visible, top-left) -->
+<header>
+  <a href="#top" aria-label="Vector Victors home">
+    <svg role="img" aria-label="Vector Victors logo"><use href="#logo"/></svg>
+    <span>Vector Victors</span>
+  </a>
+</header>
+
+<main id="top">
+
+  <!-- 3. Vision -->
+  <div class="hero">
+    <div>
+      <h1>vision</h1>
+      <p>Vector Victors</p>
+    </div>
+  </div>
+
+  <!-- 4. Members -->
+  <section id="team">
+    <div class="wrap">
+      <h2>The Team</h2>
+      <div class="accent"></div>
+      <p class="sub">Four people, one direction.</p>
+
+      <!-- To use a real photo, replace the initials with: <img src="photos/name.jpg" alt="Member Name"> -->
+      <article class="member">
+        <div class="photo">AB</div>
+        <div class="info">
+          <h3>Member One</h3>
+          <span class="role">Founder &middot; Strategy</span>
+          <p>Short bio goes here. Mention background, strengths and what this person drives within the venture. Two or three sentences work best.</p>
+        </div>
+      </article>
+
+      <article class="member">
+        <div class="photo">CD</div>
+        <div class="info">
+          <h3>Member Two</h3>
+          <span class="role">Co-founder &middot; Technology</span>
+          <p>Short bio goes here. Mention background, strengths and what this person drives within the venture. Two or three sentences work best.</p>
+        </div>
+      </article>
+
+      <article class="member">
+        <div class="photo">EF</div>
+        <div class="info">
+          <h3>Member Three</h3>
+          <span class="role">Co-founder &middot; Design</span>
+          <p>Short bio goes here. Mention background, strengths and what this person drives within the venture. Two or three sentences work best.</p>
+        </div>
+      </article>
+
+      <article class="member">
+        <div class="photo">GH</div>
+        <div class="info">
+          <h3>Member Four</h3>
+          <span class="role">Co-founder &middot; Operations</span>
+          <p>Short bio goes here. Mention background, strengths and what this person drives within the venture. Two or three sentences work best.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 5. Rules -->
+  <section class="rules" id="rules">
+    <div class="wrap">
+      <h2>Rules:</h2>
+      <div class="accent"></div>
+      <ol>
+        <li>
+          <strong>Every voice counts equally.</strong>
+          <span>Major decisions are made by discussion first, then a vote. Each of the four members has one vote, and a decision needs at least three in favour.</span>
+        </li>
+        <li>
+          <strong>Raise issues early, and openly.</strong>
+          <span>Problems are discussed directly with the people involved within 48 hours, and kept about the work, not the person. No silent resentment, no side talks.</span>
+        </li>
+        <li>
+          <strong>Unresolved conflicts go to a team review.</strong>
+          <span>If two members cannot settle a disagreement, the other two mediate. The outcome is recorded, everyone commits to it, and we revisit it after one month.</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>&copy; <span id="yr"></span> Vector Victors. All rights reserved.</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Loader: shows for 2 seconds, then fades out
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      document.getElementById('loader').classList.add('done');
+      document.body.classList.remove('loading');
+    }, 2000);
+  });
+</script>
+</body>
+</html>
