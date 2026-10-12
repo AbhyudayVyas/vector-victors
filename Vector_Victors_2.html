@@ -7,8 +7,7 @@ body{font-size:15px;line-height:1.75}
 nav{padding-top:calc(18px + env(safe-area-inset-top,0px));padding-bottom:18px;background:linear-gradient(180deg,rgba(8,10,20,.92),rgba(8,10,20,.45),transparent);backdrop-filter:blur(12px);letter-spacing:.13em}
 .navlinks{display:flex;align-items:center;gap:clamp(14px,2.3vw,32px)}
 nav a{margin-left:0!important;font-size:.76rem;white-space:nowrap}
-.nav-cta{padding:10px 15px;border:1px solid rgba(215,184,115,.55);border-radius:999px;transition:background .25s,color .25s}
-.nav-cta:hover{background:var(--gold);color:#11131a}
+.nav-cta{padding:10px 15px;border:1px solid rgba(215,184,115,.55);border-radius:999px;transition:transform .2s ease}
 .hero{min-height:100svh;padding:125px 22px 72px;isolation:isolate}
 .hero>div{max-width:900px}
 .medal{width:clamp(185px,28vw,310px);margin-bottom:2rem}
@@ -220,7 +219,7 @@ h1 span{display:block}
       </article>
       <article class="profile-card">
         <div class="profile-photo" role="img" aria-label="Photo placeholder for Arryan Pawar"><span class="photo-symbol" aria-hidden="true">＋</span><span>Add Arryan's photo</span></div>
-        <div class="profile-body"><p class="profile-kicker">03 / RESEARCHER · MAKER</p><h3>Arryan Pawar</h3><h4>A little about me</h4><p class="profile-prompt">Write a short introduction: your interests, strengths, what you enjoy creating, and what makes you you.</p></div>
+        <div class="profile-body"><p class="profile-kicker">03 / RESEARCHER · MAKER</p><h3>Arryan Pawar</h3><h4>A little about me</h4><p class="profile-prompt">I’m Arryan Pawar from Pune!<br> I’m the research guy who loves digging deeper and thinking beyond the obvious.<br> My role is to find the right information and turn it into powerful insights.<br> I believe curiosity is the first step toward innovation.<br> I’m here to bring fresh perspectives and help my team stand out!</p></div>
       </article>
       <article class="profile-card">
         <div class="profile-photo" role="img" aria-label="Photo placeholder for Rohit Tamboli"><span class="photo-symbol" aria-hidden="true">＋</span><span>Add Rohit's photo</span></div>
@@ -456,6 +455,7 @@ footer{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;paddin
 @keyframes vv-line-sweep{0%{transform:translateX(-130%);opacity:0}20%{opacity:.7}100%{transform:translateX(130%);opacity:0}}
 @keyframes vv-cue-bob{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(7px);opacity:1}}
 @keyframes vv-button-glint{0%,65%{transform:translateX(-160%) skewX(-20deg)}100%{transform:translateX(230%) skewX(-20deg)}}
+@keyframes vv-nav-cta-pop{0%{transform:scale(1)}55%{transform:scale(1.08)}100%{transform:scale(1.03)}}
 .hero::before{animation:vv-orbit 100s linear infinite;will-change:transform}
 .hero .medal{animation:vv-rise-in 1.1s var(--motion-ease) both}
 .hero h1{animation:vv-rise-in 1s .12s var(--motion-ease) both}
@@ -470,7 +470,7 @@ footer{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;paddin
 .navlinks a:not(.nav-cta)::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--motion-ease)}
 .navlinks a:not(.nav-cta):hover::after,.navlinks a[aria-current="location"]::after{transform:scaleX(1)}
 .navlinks a:hover{color:var(--gold)}
-.nav-cta{overflow:hidden;position:relative}.nav-cta::after{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:35%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent);transform:translateX(-160%) skewX(-20deg)}.nav-cta:hover::after{animation:vv-button-glint .8s ease}
+.navlinks .nav-cta:hover,.navlinks .nav-cta:focus-visible{color:inherit;background:rgba(224,193,124,.06);animation:vv-nav-cta-pop .3s ease forwards}
 .button{position:relative;overflow:hidden;isolation:isolate}.button::after{content:"";position:absolute;top:-40%;bottom:-40%;left:0;width:28%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.32),transparent);transform:translateX(-160%) skewX(-20deg);z-index:-1}.button-primary:hover::after{animation:vv-button-glint .8s ease}
 #team .row{transform-style:preserve-3d;will-change:transform}
 #team .row::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(215,184,115,.09) 48%,transparent 72%);transform:translateX(-120%);transition:none}
@@ -490,6 +490,7 @@ nav.scrolled{box-shadow:0 12px 38px rgba(0,0,0,.12)}
  .hero .hero-copy,.hero .hero-actions{opacity:1!important}
  .frame{transform:none!important;will-change:auto}
  .navlinks a,.button,#team .row h3{transition:none!important}
+ .navlinks .nav-cta:hover,.navlinks .nav-cta:focus-visible{animation:none!important}
 }
 </style>
 <script id="vector-victors-motion-script">
