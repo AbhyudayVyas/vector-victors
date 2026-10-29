@@ -269,7 +269,7 @@ I don't just follow the vision — I help bring it to life. 🚀</p><div class="
 </section>
 
 
-<section ="escalation">
+<section id="escalation">
   <div class="wrap">
     <div class="head"><span class="eyebrow">04 — RESOLVING CONFLICT</span><h2>Escalation Matrix.</h2><p>We address concerns early, fairly, and respectfully. The goal is to resolve the issue—not to blame a person.</p></div>
     <div class="rules">
@@ -740,6 +740,66 @@ body.scrolled nav,nav.scrolled{backdrop-filter:none!important;-webkit-backdrop-f
       panel.querySelector('.profile-save-status').textContent='Saved on this device and browser.';
       panel.classList.remove('is-open');edit.setAttribute('aria-expanded','false');edit.textContent='✎ Edit my introduction';
     });
+  });
+})();
+</script>
+
+
+<style id="vv-policy-section-animations">
+/* Subtle, section-only motion for the Escalation Matrix and Code of Conduct. */
+#escalation .head h2,#code-of-conduct .head h2{background:linear-gradient(100deg,var(--ink),var(--gold),var(--ink));background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:vv-policy-title-shimmer 8s ease-in-out infinite alternate}
+#escalation .rule.rv,#code-of-conduct .rule.rv{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .65s ease,transform .65s cubic-bezier(.2,.7,.2,1),border-color .3s,background .3s;transition-delay:var(--policy-delay,0ms)}
+#escalation .rule.rv.in,#code-of-conduct .rule.rv.in{opacity:1;transform:translateY(0) scale(1)}
+#escalation .rule:hover,#code-of-conduct .rule:hover{transform:translateY(-6px) scale(1.008);box-shadow:0 18px 45px rgba(0,0,0,.2),0 0 0 1px rgba(224,193,124,.06)}
+#escalation .rule::before,#code-of-conduct .rule::before{transform:scaleY(0);transform-origin:top;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+#escalation .rule:hover::before,#code-of-conduct .rule:hover::before{transform:scaleY(1)}
+#escalation .rule::after,#code-of-conduct .rule::after{width:34px;transition:width .35s ease,opacity .35s ease}
+#escalation .rule:hover::after,#code-of-conduct .rule:hover::after{width:62px;opacity:1}
+#escalation .rule:nth-child(1),#code-of-conduct .rule:nth-child(1){--policy-delay:60ms}
+#escalation .rule:nth-child(2),#code-of-conduct .rule:nth-child(2){--policy-delay:140ms}
+#escalation .rule:nth-child(3),#code-of-conduct .rule:nth-child(3){--policy-delay:220ms}
+#escalation .rule:nth-child(4),#code-of-conduct .rule:nth-child(4){--policy-delay:300ms}
+#code-of-conduct .rule:nth-child(5){--policy-delay:380ms}
+#code-of-conduct .rule:nth-child(6){--policy-delay:460ms}
+@keyframes vv-policy-title-shimmer{from{background-position:0% 50%}to{background-position:100% 50%}}
+@media(prefers-reduced-motion:reduce){#escalation .head h2,#code-of-conduct .head h2{animation:none;background:none;color:var(--ink)}#escalation .rule.rv,#code-of-conduct .rule.rv{opacity:1;transform:none;transition:none}#escalation .rule:hover,#code-of-conduct .rule:hover{transform:none}}
+</style>
+
+
+<style id="vv-policy-motion-plus">
+/* Enhanced motion only for the two added policy sections. */
+#escalation,#code-of-conduct{position:relative;isolation:isolate}
+#escalation .rule,#code-of-conduct .rule{transform-style:preserve-3d;will-change:transform,opacity;--tilt-x:0deg;--tilt-y:0deg}
+#escalation .rule.rv,#code-of-conduct .rule.rv{opacity:0;transform:translateY(34px) rotateX(4deg) scale(.97);filter:blur(3px)}
+#escalation .rule.rv.in,#code-of-conduct .rule.rv.in{opacity:1;transform:translateY(0) rotateX(0) scale(1);filter:blur(0);animation:vv-policy-card-arrive .75s cubic-bezier(.2,.75,.25,1) both;animation-delay:var(--policy-delay,0ms)}
+#escalation .rule::after,#code-of-conduct .rule::after{height:2px;width:48px;right:auto;left:0;top:0;opacity:.9;background:linear-gradient(90deg,transparent,var(--gold),#d8c8ff,transparent);transform:translateX(-130%);transition:width .35s ease,opacity .35s ease}
+#escalation .rule.in::after,#code-of-conduct .rule.in::after{animation:vv-policy-line-sweep 1.15s .2s ease-out both}
+#escalation .rule:hover::after,#code-of-conduct .rule:hover::after{width:100%;opacity:1;transform:translateX(0);animation:vv-policy-line-glow 1.4s ease-in-out infinite}
+#escalation .rule h3,#code-of-conduct .rule h3{transition:color .3s ease,transform .3s ease}
+#escalation .rule:hover h3,#code-of-conduct .rule:hover h3{color:var(--gold);transform:translateX(3px)}
+#escalation .rule::before,#code-of-conduct .rule::before{box-shadow:0 0 18px rgba(224,193,124,.2)}
+#escalation .head,#code-of-conduct .head{position:relative}
+#escalation .eyebrow,#code-of-conduct .eyebrow{display:inline-flex;align-items:center;gap:10px}
+#escalation .eyebrow::before,#code-of-conduct .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(224,193,124,.5);animation:vv-policy-ping 2.4s ease-out infinite}
+@keyframes vv-policy-card-arrive{0%{box-shadow:0 0 0 rgba(224,193,124,0)}55%{box-shadow:0 12px 38px rgba(224,193,124,.10)}100%{box-shadow:0 10px 35px rgba(0,0,0,.08)}}
+@keyframes vv-policy-line-sweep{0%{transform:translateX(-130%);opacity:0}20%{opacity:1}100%{transform:translateX(240%);opacity:0}}
+@keyframes vv-policy-line-glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.8)}}
+@keyframes vv-policy-ping{0%{box-shadow:0 0 0 0 rgba(224,193,124,.5)}70%{box-shadow:0 0 0 8px rgba(224,193,124,0)}100%{box-shadow:0 0 0 0 rgba(224,193,124,0)}}
+@media(prefers-reduced-motion:reduce){#escalation .rule.rv,#code-of-conduct .rule.rv{filter:none;animation:none!important}#escalation .rule.in::after,#code-of-conduct .rule.in::after,#escalation .eyebrow::before,#code-of-conduct .eyebrow::before{animation:none!important}#escalation .rule:hover h3,#code-of-conduct .rule:hover h3{transform:none}}
+</style>
+<script id="vv-policy-motion-plus-js">
+(function(){
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cards=document.querySelectorAll('#escalation .rule,#code-of-conduct .rule');
+  cards.forEach(function(card,i){card.style.setProperty('--policy-delay',(i%6)*115+'ms');});
+  if(reduced||!('IntersectionObserver' in window)){cards.forEach(function(c){c.classList.add('in')});return;}
+  var seen=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');seen.unobserve(entry.target);}})},{threshold:.18,rootMargin:'0px 0px -35px 0px'});
+  cards.forEach(function(c){seen.observe(c)});
+  // Small pointer tilt on desktop; touch screens and reduced-motion users stay still.
+  if(!window.matchMedia('(hover: hover) and (pointer: fine)').matches)return;
+  cards.forEach(function(card){
+    card.addEventListener('pointermove',function(e){if(!card.classList.contains('in'))return;var r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform='translateY(-5px) perspective(900px) rotateX('+(-y*2.5)+'deg) rotateY('+(x*2.5)+'deg) scale(1.008)';});
+    card.addEventListener('pointerleave',function(){card.style.transform='';});
   });
 })();
 </script>
